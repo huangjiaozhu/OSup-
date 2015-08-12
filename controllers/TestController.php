@@ -7,9 +7,7 @@
  */
 
 namespace app\controllers;
-require_once("./test/testNamespace.php");//必须先引入
 use Yii;
-use test\testNamespace;
 use yii\web\Controller;
 use app\models\Test;
 use app\models\Publish;
@@ -233,6 +231,7 @@ class TestController extends Controller{
 
     public function actionBar(){
         return $this->render('bar');
+        //ceshi git
     }
 
     protected function findModel($id){
