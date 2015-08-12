@@ -6,6 +6,7 @@
  * Time: 19:37
  */
 use yii\helpers\Html;
+error_reporting( E_ALL&~E_NOTICE );
 $this -> title = "详细信息";
 ?>
 
@@ -30,7 +31,7 @@ $this -> title = "详细信息";
 
     <hr/>
     <div class="comments">
-        <?php foreach($comments as $comment):?>
+        <?php foreach($comments as $key=>$comment){?>
         <div class="comment">
             <div class="head" style="position: relative">
                 <div class="count" style="position: relative">
@@ -48,6 +49,12 @@ $this -> title = "详细信息";
             </div>
             <div class="comment" style="clear: both">
                 <span><?=Html::encode($comment->comment)?></span>
+                <div class="recomment">
+                    <?php foreach($recomment[$key] as $onerecomment){?>
+                    <p><?=Html::encode(($onerecomment->recomment_name!=""? "@".$onerecomment->recomment_name.": " :"").$onerecomment->reply_content)?></p>
+                        <hr>
+                    <?php }; ?>
+                </div>
             </div>
             <br>
             <div>
@@ -59,7 +66,7 @@ $this -> title = "详细信息";
             </div>
             <hr/>
         </div>
-        <?php endforeach;?>
+        <?php };?>
     </div>
     <?php if($model->bestanswer!=""):?>
         <div class="chat">
@@ -99,4 +106,3 @@ $this -> title = "详细信息";
             </div>
     </div>
 </div>
-

@@ -13,7 +13,7 @@ class Test extends ActiveRecord{
         return "test";
     }
 
-    public function getComments(){
-        return $this->hasMany(Comment::className(),['test_id'=>'id'])->orderBy('commentdate DESC');
+    public function getComments($page){
+        return $this->hasMany(Comment::className(),['test_id'=>'id'])->offset($page*10)->limit(10)->orderBy('commentdate DESC');
 }
 }

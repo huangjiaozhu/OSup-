@@ -17,4 +17,8 @@ class Comment extends ActiveRecord{
     public function getTest(){
         return $this->hasOne(Test::className(),['id'=>'test_id']);
     }
+
+    public function getRecomment($page=0){
+        return $this->hasMany(Recomment::className(),['comment_id'=>'id'])->offset($page*5)->limit(5)->orderBy('reply_time DESC');
+    }
 }

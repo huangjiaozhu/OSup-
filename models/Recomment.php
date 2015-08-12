@@ -29,10 +29,10 @@ class Recomment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['comment_id', 'replyer_name', 'reply_time', 'reply_content'], 'required'],
-            [['comment_id'], 'integer'],
-            [['reply_time'], 'safe'],
-            [['replyer_name', 'reply_content'], 'string', 'max' => 200]
+//            [['comment_id', 'replyer_name', 'reply_time', 'reply_content'], 'required'],
+//            [['comment_id'], 'integer'],
+//            [['reply_time'], 'safe'],
+//            [['replyer_name', 'reply_content'], 'string', 'max' => 200]
         ];
     }
 

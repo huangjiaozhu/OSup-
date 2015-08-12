@@ -16,6 +16,7 @@ use yii\web\NotFoundHttpException;
 use app\models\Login;
 use app\models\Comment;
 use app\models\Click;
+use app\models\Recomment;
 class TestController extends Controller{
     public $layout = 'test';//共有部分使用单个layout
     public $enableCsrfValidation = false;//禁用Csrf
@@ -126,11 +127,19 @@ class TestController extends Controller{
     public function actionComment(){
             $request = Yii::$app->request;
             $chapterid = $request->get('id');
+            $page = is_null($request->get('commentpage'))?$request->get('commentpage'):0;
+            $recommentpage = is_null($request->get('recommentpage'))?$request->get('recommentpage'):0;
             $model = $this->findModel($chapterid);
             $chapter = Test::find()->where('id=:id',[":id"=>$chapterid])->one();
             $best = hash('sha256',$chapter->bestanswer);
-            $comments = $chapter -> comments;
-            return $this->render('detail',['model'=>$model,'comments'=>$comments,'best'=>$best]);
+            $comments = $chapter -> getComments($page)->all();
+            $recomment = array();
+            foreach($comments as $oneComments){
+                $onerecomment = $oneComments -> getRecomment($recommentpage)->all();
+                array_push($recomment,$onerecomment);
+            }
+//            print_r($recomment);
+            return $this->render('detail',['model'=>$model,'comments'=>$comments,'best'=>$best,'recomment'=>$recomment]);
 //            echo "come here";
 
     }
