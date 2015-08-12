@@ -9,6 +9,9 @@ use yii\captcha\Captcha;
 
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile('libs/kindeditor/themes/default/default.css');
+$this->registerJsFile('libs/kindeditor/kindeditor-min.js');
+$this->registerJsFile('libs/kindeditor/lang/zh_CN.js');
 ?>
 <div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title></title>
+    <script src="jquery-2.1.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+//            console.log($("#file"));
+            $("#file").on('change',function()
+            {
+                var name = window.URL.createObjectURL($("#file").files);
+                console.log(name);
+                if(name!=null)
+                    $.post('ajax.php',{name:name}, function (data) {
+                        $("#result").html(data);
+                    });
+            });
+        })
+    </script>
+</head>
+<body>
+<form id="form1" runat="server" enctype="multipart/form-data">
+    <input type="file" id="file">
+</form>
+<span id="result"></span>
+<input type="text" pl>
+</body>
+</html>
