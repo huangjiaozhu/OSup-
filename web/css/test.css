@@ -287,10 +287,25 @@ a,a:hover,a:visited,a:focus{
 
 .recomment{
     width: 100%;
-    background-color: #e5e0e4;
-    margin-left: 10px;
+    /*background-color: #e5e0e4;*/
+    /*margin-left: 10px;*/
     margin-top: 20px;
-    /*padding: 10px;*/
+    padding: 20px;
     font-size: 14px;
     line-height: 14px;
+    border: 1px solid lightgrey;
+}
+
+.re-recomment{
+    display: block;
+    float: right;
+}
+
+.hr{
+    padding: 10px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.recomment-hide{
+    display: none;
 }

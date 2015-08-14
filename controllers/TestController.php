@@ -124,9 +124,12 @@ class TestController extends Controller{
 
 
     //显示评论
-    public function actionComment(){
+    public function actionComment($id=""){
             $request = Yii::$app->request;
-            $chapterid = $request->get('id');
+            if($id=="")
+                $chapterid = $request->get('id');
+            else
+                $chapterid = $id;
             $page = is_null($request->get('commentpage'))?$request->get('commentpage'):0;
             $recommentpage = is_null($request->get('recommentpage'))?$request->get('recommentpage'):0;
             $model = $this->findModel($chapterid);
@@ -230,6 +233,34 @@ class TestController extends Controller{
             $test->save();
             $result = Test::find()->orderBy('publishtime DESC')->offset(0)->limit(5)->asArray()->all();
             return $this -> render('index',['data' => $result]);
+        }
+    }
+
+    public function actionRecomment(){
+        if(Yii::$app->request->isPost){
+            $session = Yii::$app->session;
+            if(!$session->isActive)
+                $session->open();
+            if(!isset($session['user']))
+                $this->redirect('?r=login');
+            $user_id = $session['user']['userid'];
+            $user_name = $session['user']['name'];
+            $request = Yii::$app->request;
+            $chapterid = $request->post('chapterid');
+            $commentid = $request->post('commentid');
+            $recommentid = $request->post('recommentid');
+            $recommentname = $request->post('recommentname');
+            $recommentcontent = $request->post('recommentcontent');
+            $recommentmodel = new Recomment();
+            $recommentmodel->comment_id = $commentid;
+            $recommentmodel->recomment_id = $recommentid;
+            $recommentmodel->recomment_name = $recommentname;
+            $recommentmodel->replyer = $user_name;
+            $recommentmodel->reply_content = $recommentcontent;
+            $recommentmodel->reply_time = date("Y-m-d H:i:s",time());
+//            var_dump($recommentmodel);
+            $recommentmodel->save();
+            return $this->redirect(['comment','id'=>$chapterid]);
         }
     }
 

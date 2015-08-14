@@ -47,15 +47,26 @@ $this -> title = "详细信息";
                     </span>
                 </div>
             </div>
+            <?php if($recomment[$key]!=null){?>
             <div class="comment" style="clear: both">
                 <span><?=Html::encode($comment->comment)?></span>
                 <div class="recomment">
-                    <?php foreach($recomment[$key] as $onerecomment){?>
-                    <p><?=Html::encode(($onerecomment->recomment_name!=""? "@".$onerecomment->recomment_name.": " :"").$onerecomment->reply_content)?></p>
-                        <hr>
-                    <?php }; ?>
+                    <?php foreach($recomment[$key] as $onerecomment){ if($onerecomment!=""){?>
+                    <p class="hr"><?=Html::encode(($onerecomment->recomment_name!=""? $onerecomment->replyer."@".$onerecomment->recomment_name.": " :"").$onerecomment->reply_content)?><a class="re-recomment" href="javascript:void(0)">回复</a></p>
+                        <div class="recomment-hide">
+                            <form method="post" action="?r=test/recomment">
+                                <input type="text" hidden="hidden" name="chapterid" value="<?=$model->id?>">
+                                <input type="text" hidden="hidden" name="commentid" value="<?=$comment->id?>">
+                                <input type="text" hidden="hidden" name="recommentid" value="<?=$onerecomment->id?>">
+                                <input type="text" hidden="hidden" name="recommentname" value="<?=$onerecomment->recomment_name?>">
+                                <textarea rows="3" name="recommentcontent" style="width: 100%;margin-bottom: 10px"></textarea>
+                                <button type="submit" class="btn">回复</button>
+                            </form>
+                        </div>
+                    <?php }}; ?>
                 </div>
             </div>
+            <?php }?>
             <br>
             <div>
                 <?php if(hash('sha256',$comment->comment)==$best){?>

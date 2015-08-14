@@ -95,6 +95,7 @@ use yii\widgets\Menu;
 <script src="./js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 <script src="./js/rank.js"></script>
 <script src="./js/bar.js"></script>
+<script src="./js/recomment.js"></script>
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
         //language:  'fr',
