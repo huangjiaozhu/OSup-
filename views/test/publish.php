@@ -7,7 +7,7 @@
  */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->$title="发布新消息";
+$this->title="发布新消息";
 ?>
 
 <div class="publishmain" style="background-color: oldlace">

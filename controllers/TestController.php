@@ -141,7 +141,7 @@ class TestController extends Controller{
                 'defaultPageSize' => 3,
                 'totalCount' => $allcomments->count()
             ]);
-            $comments = $allcomments->offset($commentpage->offset)->limit($commentpage->limit)->all();
+            $comments = $allcomments->offset($commentpage->offset)->limit($commentpage->limit)->with('recomment')->all();
             $recomment = array();
             foreach($comments as $oneComments){
                 $onerecomment = $oneComments -> getRecomment($recommentpage)->all();
