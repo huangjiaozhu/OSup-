@@ -7,6 +7,7 @@
  */
 use yii\helpers\Html;
 use yii\helpers\Url;
+$this->title = "sdkj";
 ?>
 <div id="rank">
 <?php foreach($data as $one):?>
