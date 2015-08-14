@@ -6,6 +6,7 @@
  * Time: 19:37
  */
 use yii\helpers\Html;
+use yii\widgets\LinkPager;
 error_reporting( E_ALL&~E_NOTICE );
 $this -> title = "详细信息";
 ?>
@@ -52,13 +53,20 @@ $this -> title = "详细信息";
                 <span><?=Html::encode($comment->comment)?></span>
                 <div class="recomment">
                     <?php foreach($recomment[$key] as $onerecomment){ if($onerecomment!=""){?>
-                    <p class="hr"><?=Html::encode(($onerecomment->recomment_name!=""? $onerecomment->replyer."@".$onerecomment->recomment_name.": " :"").$onerecomment->reply_content)?><a class="re-recomment" href="javascript:void(0)">回复</a></p>
+                    <p class="hr">
+                        <?=Html::encode($onerecomment->replyer)?>
+                        <?php if($onerecomment->replyer==$model->author){echo"<span class='louzhu'>楼主</span>";}?>
+                        <?=Html::encode("@ ".$onerecomment->recomment_name)?>
+                        <?php if($onerecomment->recomment_name==$model->author){echo"<span class='louzhu'>楼主</span>";}?>
+                        <?=Html::encode(": ".$onerecomment->reply_content)?>
+                        <a class="re-recomment" href="javascript:void(0)">回复</a>
+                    </p>
                         <div class="recomment-hide">
                             <form method="post" action="?r=test/recomment">
                                 <input type="text" hidden="hidden" name="chapterid" value="<?=$model->id?>">
                                 <input type="text" hidden="hidden" name="commentid" value="<?=$comment->id?>">
                                 <input type="text" hidden="hidden" name="recommentid" value="<?=$onerecomment->id?>">
-                                <input type="text" hidden="hidden" name="recommentname" value="<?=$onerecomment->recomment_name?>">
+                                <input type="text" hidden="hidden" name="recommentname" value="<?=$onerecomment->replyer?>">
                                 <textarea rows="3" name="recommentcontent" style="width: 100%;margin-bottom: 10px"></textarea>
                                 <button type="submit" class="btn">回复</button>
                             </form>
@@ -67,6 +75,19 @@ $this -> title = "详细信息";
                 </div>
             </div>
             <?php }?>
+            <br>
+            <div class="comment-add">
+                <p><button type="button"class="btn createcomment">我有看法</button></p>
+                <div class="recomment-hide">
+                    <form method="post" action="?r=test/add-recomment">
+                        <input type="text" hidden="hidden" name="chapterid" value="<?=$model->id?>">
+                        <input type="text" hidden="hidden" name="commentid" value="<?=$comment->id?>">
+                        <input type="text" hidden="hidden" name="commentname" value="<?=$comment->replyer?>">
+                        <textarea rows="3" name="recommentcontent" style="width: 100%;margin-bottom: 10px"></textarea>
+                        <button type="submit" class="btn">提交</button>
+                    </form>
+                </div>
+            </div>
             <br>
             <div>
                 <?php if(hash('sha256',$comment->comment)==$best){?>
@@ -79,6 +100,7 @@ $this -> title = "详细信息";
         </div>
         <?php };?>
     </div>
+    <?=LinkPager::widget(['pagination'=>$commentpage]);?>
     <?php if($model->bestanswer!=""):?>
         <div class="chat">
             <div class="bestanswer">

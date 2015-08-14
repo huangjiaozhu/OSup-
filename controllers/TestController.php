@@ -17,6 +17,7 @@ use app\models\Login;
 use app\models\Comment;
 use app\models\Click;
 use app\models\Recomment;
+use yii\data\Pagination;
 class TestController extends Controller{
     public $layout = 'test';//共有部分使用单个layout
     public $enableCsrfValidation = false;//禁用Csrf
@@ -135,14 +136,19 @@ class TestController extends Controller{
             $model = $this->findModel($chapterid);
             $chapter = Test::find()->where('id=:id',[":id"=>$chapterid])->one();
             $best = hash('sha256',$chapter->bestanswer);
-            $comments = $chapter -> getComments($page)->all();
+            $allcomments = $chapter -> getComments();
+            $commentpage = new Pagination([
+                'defaultPageSize' => 3,
+                'totalCount' => $allcomments->count()
+            ]);
+            $comments = $allcomments->offset($commentpage->offset)->limit($commentpage->limit)->all();
             $recomment = array();
             foreach($comments as $oneComments){
                 $onerecomment = $oneComments -> getRecomment($recommentpage)->all();
                 array_push($recomment,$onerecomment);
             }
 //            print_r($recomment);
-            return $this->render('detail',['model'=>$model,'comments'=>$comments,'best'=>$best,'recomment'=>$recomment]);
+            return $this->render('detail',['model'=>$model,'comments'=>$comments,'best'=>$best,'recomment'=>$recomment,'commentpage'=>$commentpage]);
 //            echo "come here";
 
     }
@@ -259,11 +265,37 @@ class TestController extends Controller{
             $recommentmodel->reply_content = $recommentcontent;
             $recommentmodel->reply_time = date("Y-m-d H:i:s",time());
 //            var_dump($recommentmodel);
+            if($recommentcontent!="")
             $recommentmodel->save();
             return $this->redirect(['comment','id'=>$chapterid]);
         }
     }
 
+    public function actionAddRecomment(){
+        if(Yii::$app->request->isPost){
+            $session = Yii::$app->session;
+            if(!$session->isActive)
+                $session->open();
+            if(!isset($session['user']))
+                $this->redirect('?r=login');
+            $user_id = $session['user']['userid'];
+            $user_name = $session['user']['name'];
+            $request = Yii::$app->request;
+            $chapterid = $request->post('chapterid');
+            $commentid = $request->post('commentid');
+            $commentname = $request->post('commentname');
+            $content = $request->post('recommentcontent');
+            $recommentmodel = new Recomment();
+            $recommentmodel->comment_id = $commentid;
+            $recommentmodel->replyer = $user_name;
+            $recommentmodel->recomment_name = $commentname;
+            $recommentmodel->reply_content = $content;
+            $recommentmodel->reply_time = date("Y-m-d H:i:s",time());
+            if($content!="")
+                $recommentmodel->save();
+            return $this->redirect(['comment','id'=>$chapterid]);
+        }
+    }
     public function actionRank(){
         $result = Test::find()->orderBy('totalcomment DESC')->offset(0)->limit(10)->all();
         return $this -> render('rank',['data' => $result]);

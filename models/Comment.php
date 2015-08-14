@@ -19,6 +19,6 @@ class Comment extends ActiveRecord{
     }
 
     public function getRecomment($page=0){
-        return $this->hasMany(Recomment::className(),['comment_id'=>'id'])->offset($page*5)->limit(5)->orderBy('reply_time DESC');
+        return $this->hasMany(Recomment::className(),['comment_id'=>'id'])->offset($page*5)->limit(10)->orderBy('reply_time');
     }
 }
