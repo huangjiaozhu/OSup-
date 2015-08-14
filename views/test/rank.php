@@ -7,6 +7,7 @@
  */
 use yii\helpers\Html;
 use yii\helpers\Url;
+$this->title = "最多评论";
 ?>
 <div id="rank">
 <?php foreach($data as $one):?>
