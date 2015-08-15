@@ -12,6 +12,17 @@ $config = [
 //        'defaultRoute' => [
 //            'class' => 'app\controllers\Login'
 //        ],
+    /*
+     * urlManager对于yii方法生成的路由有效
+     */
+//        'urlManager'=>[
+//            'enablePrettyUrl' => true,
+//            'showScriptName' => false,
+//            'rules' => [
+//                "<controller:\w+>/<action:\w+>/<id:\d+>"=>"<controller>/<action>",
+//                "<controller:\w+>/<action:\w+>"=>"<controller>/<action>"
+//            ],
+//        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'osup',
