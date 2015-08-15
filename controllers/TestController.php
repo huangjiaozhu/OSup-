@@ -133,7 +133,7 @@ class TestController extends Controller{
                 $chapterid = $id;
             $page = is_null($request->get('commentpage'))?$request->get('commentpage'):0;
             $recommentpage = is_null($request->get('recommentpage'))?$request->get('recommentpage'):0;
-            $model = $this->findModel($chapterid);
+//            $model = $this->findModel($chapterid);
             $chapter = Test::find()->where('id=:id',[":id"=>$chapterid])->one();
             $best = hash('sha256',$chapter->bestanswer);
             $allcomments = $chapter -> getComments();
@@ -148,7 +148,7 @@ class TestController extends Controller{
                 array_push($recomment,$onerecomment);
             }
 //            print_r($recomment);
-            return $this->render('detail',['model'=>$model,'comments'=>$comments,'best'=>$best,'recomment'=>$recomment,'commentpage'=>$commentpage]);
+            return $this->render('detail',['model'=>$chapter,'comments'=>$comments,'best'=>$best,'recomment'=>$recomment,'commentpage'=>$commentpage]);
 //            echo "come here";
 
     }
