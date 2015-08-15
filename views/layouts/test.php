@@ -37,13 +37,36 @@ use yii\widgets\Menu;
                 </ul>
                 <ul class="nav navbar-nav navbar-right menu user">
                     <?php if(isset($_SESSION['user'])):?>
-                    <li id="sessionuser"><span class="sr-only"><?=$_SESSION['user']['userid']?></span><a><?=$_SESSION['user']['name']?></a></li>
-                    <li><a href="?r=login/logout">注销</a></li>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-default dropdown-toggle" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="ture"><span id="sessionuser"><span class="sr-only"><?=$_SESSION['user']['userid']?></span><?=$_SESSION['user']['name']?></span><span class="caret"></span></button>
+                            <ul class="dropdown-menu" aria-labelledby="user-menu">
+                                <li><a href="javascript:;">用户中心</a></li>
+                                <li><a href="javascript:;" data-toggle="modal" data-target="#myModal">我编的</a></li>
+                                <li><a href="?r=login/logout">注销</a></li>
+                            </ul>
+                        </div>
                     <?php endif;?>
                     <?php if(!isset($_SESSION['user'])):?>
                     <li><a href="?r=login">测试三</a></li>
                     <?php endif?>
                 </ul>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">花呀</h4>
+                            </div>
+                            <div class="modal-body">
+                                啊教主尼亚在哪了。。
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>

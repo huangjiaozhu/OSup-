@@ -13,12 +13,12 @@ a,a:hover,a:visited,a:focus{
     padding-top: 50px;
 }
 
-.menu a {
+.menu button,.menu button:hover,.menu button:active,.menu button:focus {
+    padding-top: 15px;
+    padding-bottom: 15px;
     color: #ffffff !important;
-}
-
-.menu a:hover{
-    color: #000000 !important;
+    background-color: #ed9c28 !important;
+    border: 1px solid transparent !important;
 }
 .headcolor{
     background-color: #ed9c28;

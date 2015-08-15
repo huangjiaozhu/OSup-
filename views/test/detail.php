@@ -48,9 +48,10 @@ $this -> title = "详细信息";
                     </span>
                 </div>
             </div>
-            <?php if($recomment[$key]!=null){?>
+
             <div class="comment" style="clear: both">
                 <span><?=Html::encode($comment->comment)?></span>
+                <?php if($recomment[$key]!=null){?>
                 <div class="recomment">
                     <?php foreach($recomment[$key] as $onerecomment){ if($onerecomment!=""){?>
                     <p class="hr">
